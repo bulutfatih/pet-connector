@@ -183,7 +183,7 @@ router.put("/pet", [
 ]);
 
 // @route   DELETE api/profile/pet/:pet_id
-// @desc    Delete pet from profile
+// @desc    Delete pet from profile, test
 // @access  Private
 router.delete("/pet/:pet_id", auth, async (req, res) => {
   try {
