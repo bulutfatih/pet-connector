@@ -1,9 +1,10 @@
 import React, { useEffect, Fragment } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
 import { getCurrentProfile } from "../../actions/profile";
-import { Link } from "react-router-dom";
+import DashboardActions from "./DashboardActions";
 
 const Dashboard = props => {
   const { getCurrentProfile, auth, profile } = props;
@@ -24,7 +25,9 @@ const Dashboard = props => {
         <i className="fas fa-user" /> Welcome {user?.name}
       </p>
       {userProfile ? (
-        <Fragment>User profile will be shown here.</Fragment>
+        <Fragment>
+          <DashboardActions />
+        </Fragment>
       ) : (
         <Fragment>
           <p>You have not yet setup a profile, please add some information.</p>
