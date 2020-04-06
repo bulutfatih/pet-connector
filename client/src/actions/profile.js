@@ -1,7 +1,13 @@
 import axios from "axios";
 import { setAlert } from "./alert";
 
-import { GET_PROFILE, UPDATE_PROFILE, PROFILE_ERROR } from "./types";
+import {
+  GET_PROFILE,
+  UPDATE_PROFILE,
+  PROFILE_ERROR,
+  CLEAR_PROFILE,
+  ACCOUNT_DELETED,
+} from "./types";
 
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
@@ -96,5 +102,49 @@ export const addPet = (formData, history) => async (dispatch) => {
         status: error.response.status,
       },
     });
+  }
+};
+
+// Delete pet
+export const deletePet = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/profile/pet/${id}`);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    });
+
+    dispatch(setAlert("Pet Removed", "success"));
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Delete account & profile
+export const deleteAccount = () => async (dispatch) => {
+  if (window.confirm("Are you sure? This can NOT be recovered!")) {
+    try {
+      await axios.delete(`/api/profile`);
+
+      dispatch({ type: CLEAR_PROFILE });
+      dispatch({ type: ACCOUNT_DELETED });
+
+      dispatch(setAlert("Your account has been permanently deleted"));
+    } catch (error) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: error.response.statusText,
+          status: error.response.status,
+        },
+      });
+    }
   }
 };

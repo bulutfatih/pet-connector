@@ -2,9 +2,10 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import { connect } from "react-redux";
+import { deletePet } from "../../actions/profile";
 
 const Pet = (props) => {
-  const { pet } = props;
+  const { pet, deletePet } = props;
 
   const pets = pet?.map((pt) => (
     <tr key={pt._id}>
@@ -15,7 +16,9 @@ const Pet = (props) => {
         {!pt.to ? " Now" : dayjs(pt.to).format("DD-MM-YYYY")}
       </td>
       <td>
-        <button className="btn btn-danger">Delete</button>
+        <button onClick={() => deletePet(pt._id)} className="btn btn-danger">
+          Delete
+        </button>
       </td>
     </tr>
   ));
@@ -40,6 +43,11 @@ const Pet = (props) => {
 
 Pet.propTypes = {
   pet: PropTypes.array.isRequired,
+  deletePet: PropTypes.func.isRequired,
 };
 
-export default Pet;
+const mapDispatchToProps = {
+  deletePet,
+};
+
+export default connect(null, mapDispatchToProps)(Pet);
