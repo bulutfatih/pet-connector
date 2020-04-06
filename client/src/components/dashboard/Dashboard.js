@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
 import { getCurrentProfile } from "../../actions/profile";
 import DashboardActions from "./DashboardActions";
+import Pet from "./Pet";
 
-const Dashboard = props => {
+const Dashboard = (props) => {
   const { getCurrentProfile, auth, profile } = props;
 
   const { profile: userProfile, loading } = profile;
@@ -27,6 +28,7 @@ const Dashboard = props => {
       {userProfile ? (
         <Fragment>
           <DashboardActions />
+          <Pet pet={userProfile.pet} />
         </Fragment>
       ) : (
         <Fragment>
@@ -43,12 +45,12 @@ const Dashboard = props => {
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  profile: state.profile
+  profile: state.profile,
 });
 
 export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
