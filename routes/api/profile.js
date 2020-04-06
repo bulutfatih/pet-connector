@@ -5,16 +5,16 @@ const { check, validationResult } = require("express-validator");
 
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
+const Post = require("../../models/Post");
 
 // @route   GET api/profile/me
 // @desc    Get current users profile
 // @access  Private
 router.get("/me", auth, async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate(
-      "user",
-      ["user", "avatar"]
-    );
+    const profile = await Profile.findOne({
+      user: req.user.id,
+    }).populate("user", ["user", "avatar"]);
 
     if (!profile) {
       return res.status(400).json({ msg: "There is no profile for this user" });
@@ -33,14 +33,7 @@ router.get("/me", auth, async (req, res) => {
 
 router.post(
   "/",
-  [
-    auth,
-    [
-      check("bio", "Bio is required")
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check("bio", "Bio is required").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -106,7 +99,7 @@ router.get("/", async (req, res) => {
 router.get("/user/:user_id", async (req, res) => {
   try {
     const profile = await Profile.findOne({
-      user: req.params.user_id
+      user: req.params.user_id,
     }).populate("user", ["name", "avatar"]);
 
     if (!profile) return res.status(400).send("Profile not found");
@@ -125,8 +118,12 @@ router.get("/user/:user_id", async (req, res) => {
 // @access  Private
 router.delete("/", auth, async (req, res) => {
   try {
+    // Remove user posts
+    await Post.deleteMany({ user: req.user.id });
+
     // Remove profile
     await Profile.findOneAndRemove({ user: req.user.id });
+
     // Remove user
     await User.findOneAndRemove({ _id: req.user.id });
 
@@ -143,12 +140,8 @@ router.delete("/", auth, async (req, res) => {
 router.put("/pet", [
   auth,
   [
-    check("name", "Name is required")
-      .not()
-      .isEmpty(),
-    check("petType", "Pet type is required")
-      .not()
-      .isEmpty()
+    check("name", "Name is required").not().isEmpty(),
+    check("petType", "Pet type is required").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -164,7 +157,7 @@ router.put("/pet", [
       from,
       to,
       current,
-      description
+      description,
     };
 
     try {
@@ -179,7 +172,7 @@ router.put("/pet", [
       console.log(error);
       return res.status(500).send("Server error");
     }
-  }
+  },
 ]);
 
 // @route   DELETE api/profile/pet/:pet_id
@@ -191,7 +184,7 @@ router.delete("/pet/:pet_id", auth, async (req, res) => {
 
     // Find the remove index
     const removeIndex = profile.pet
-      .map(item => item.id)
+      .map((item) => item.id)
       .indexOf(req.params.pet_id);
 
     profile.pet.splice(removeIndex, 1);
