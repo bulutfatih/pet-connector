@@ -15,7 +15,7 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     getCurrentProfile();
-  }, []);
+  }, [getCurrentProfile]);
 
   return loading && userProfile === null ? (
     <Spinner />

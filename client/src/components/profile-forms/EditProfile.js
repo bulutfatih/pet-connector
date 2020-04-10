@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -10,15 +11,15 @@ const formInitialData = {
   youtube: "",
   facebook: "",
   instagram: "",
-  twitter: ""
+  twitter: "",
 };
 
-const EditProfile = props => {
+const EditProfile = (props) => {
   const {
     profile: { profile, loading },
     createProfile,
     getCurrentProfile,
-    history
+    history,
   } = props;
 
   const [formData, setFormData] = useState(formInitialData);
@@ -36,14 +37,14 @@ const EditProfile = props => {
         youtube: profile?.social?.youtube || "",
         facebook: profile?.social?.facebook || "",
         instagram: profile?.social?.instagram || "",
-        twitter: profile?.social?.twitter || ""
+        twitter: profile?.social?.twitter || "",
       });
-  }, [loading]);
+  }, [loading, getCurrentProfile]);
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     createProfile(formData, history, true);
   };
@@ -142,16 +143,16 @@ const EditProfile = props => {
 EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  profile: state.profile
+const mapStateToProps = (state) => ({
+  profile: state.profile,
 });
 
 const mapDispatchToProps = {
   createProfile,
-  getCurrentProfile
+  getCurrentProfile,
 };
 
 export default connect(
