@@ -4,14 +4,20 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
 
-const Navbar = props => {
+const Navbar = (props) => {
   const {
     auth: { isAuthenticated, loading },
-    logout
+    logout,
   } = props;
 
   const authLinks = (
     <ul>
+      <li>
+        <Link to="/profiles">
+          <i className="fas fa-user" />{" "}
+          <span className="hide-sm">Profiles</span>
+        </Link>
+      </li>
       <li>
         <Link to="/dashboard">
           <i className="fas fa-user" />{" "}
@@ -30,7 +36,7 @@ const Navbar = props => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="/profiles">Pets</Link>
+        <Link to="/profiles">Profiles</Link>
       </li>
       <li>
         <Link to="/register">Sign up</Link>
@@ -57,11 +63,11 @@ const Navbar = props => {
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);
