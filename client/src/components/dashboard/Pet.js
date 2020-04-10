@@ -13,7 +13,7 @@ const Pet = (props) => {
       <td>{pt.petType}</td>
       <td>
         {dayjs(pt.from).format("DD/MM/YYYY")} -{" "}
-        {!pt.to ? " Now" : dayjs(pt.to).format("DD-MM-YYYY")}
+        {!pt.to ? " Now" : dayjs(pt.to).format("DD/MM/YYYY")}
       </td>
       <td>
         <button onClick={() => deletePet(pt._id)} className="btn btn-danger">
