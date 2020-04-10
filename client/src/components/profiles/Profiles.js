@@ -13,7 +13,7 @@ const Profiles = (props) => {
 
   useEffect(() => {
     getProfiles();
-  }, []);
+  }, [getProfiles]);
 
   return (
     <Fragment>
