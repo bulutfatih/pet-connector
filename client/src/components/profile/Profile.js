@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
 import ProfileTop from "./ProfileTop";
 import ProfileAbout from "./ProfileAbout";
+import ProfilePet from "./ProfilePet";
 import { getProfileById } from "../../actions/profile";
 
 export const Profile = (props) => {
@@ -38,6 +39,18 @@ export const Profile = (props) => {
           <div className="profile-grid my-1">
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
+            <div className="profile-exp bg-white p-2">
+              <h2 className="text-primary">Pets</h2>
+              {profile.pet.length > 0 ? (
+                <Fragment>
+                  {profile?.pet?.map((_pet) => (
+                    <ProfilePet key={_pet._id} pet={_pet} />
+                  ))}
+                </Fragment>
+              ) : (
+                <h4>No pet to show</h4>
+              )}
+            </div>
           </div>
         </Fragment>
       )}
