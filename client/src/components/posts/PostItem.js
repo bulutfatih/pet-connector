@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { connect } from "react-redux";
-import { addLike, removeLike } from "../../actions/post";
+import { addLike, removeLike, deletePost } from "../../actions/post";
 
 const PostItem = (props) => {
   const {
     addLike,
     removeLike,
+    deletePost,
     auth,
     post: { _id, text, name, avatar, user, likes, comments, date },
   } = props;
@@ -48,7 +49,11 @@ const PostItem = (props) => {
           )}
         </Link>
         {!auth.loading && user === auth.user._id && (
-          <button type="button" className="btn btn-danger">
+          <button
+            onClick={(e) => deletePost(_id)}
+            type="button"
+            className="btn btn-danger"
+          >
             <i className="fas fa-times"></i>
           </button>
         )}
@@ -60,6 +65,9 @@ const PostItem = (props) => {
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  addLike: PropTypes.func.isRequired,
+  removeLike: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -69,6 +77,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addLike,
   removeLike,
+  deletePost,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostItem);
