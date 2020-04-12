@@ -14,8 +14,14 @@ const Navbar = (props) => {
     <ul>
       <li>
         <Link to="/profiles">
-          <i className="fas fa-user" />{" "}
+          <i className="fas fa-users" />{" "}
           <span className="hide-sm">Profiles</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/posts">
+          <i className="fas fa-pencil-alt" />{" "}
+          <span className="hide-sm">Posts</span>
         </Link>
       </li>
       <li>
