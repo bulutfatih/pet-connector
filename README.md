@@ -1,13 +1,16 @@
-# Pet Connector
+# Pet Connector App
 
 > Social network for pet owners
 
 Tech stack: Node.js, Express.js, React.js, MongoDB
 
-Live Demo: https://floating-temple-25916.herokuapp.com/
-You can create a new account or use this demo account
+#### Live Demo: https://floating-temple-25916.herokuapp.com/
+
+You can create a new account or use the following demo account
+```
 Email: test@test.com
 Password: 123456
+```
 
 # Quick Start 🚀
 
