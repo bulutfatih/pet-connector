@@ -16,8 +16,8 @@ function Landing(props) {
         <div className="landing-inner">
           <h1 className="x-large">Pet Connector</h1>
           <p className="lead">
-            Create a profile for your pet, <br />
-            share your knowledge and get help from other pet owners
+            Join the pet owners community, <br />
+            share your knowledge and get help from the others!
           </p>
           <div className="buttons">
             <Link to="/register" className="btn btn-primary">
@@ -34,11 +34,11 @@ function Landing(props) {
 }
 
 Landing.propTypes = {
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps)(Landing);
